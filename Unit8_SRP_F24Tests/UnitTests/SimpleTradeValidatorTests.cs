@@ -258,5 +258,19 @@ public class SimpleTradeValidatorTests
         {
         }
     }
+
+    [TestMethod]
+    public void TestEmptyString_ReturnsFalse()
+    {
+        // Arrange
+        var validator = new SimpleTradeValidator(new StubLogger());
+        string[] fields = { "", "1000", "1.25" };
+
+        // Act
+        bool isValid = validator.ValidateTradeData(fields, 1);
+
+        // Assert
+        Assert.IsFalse(isValid);
+    }
 }
 
