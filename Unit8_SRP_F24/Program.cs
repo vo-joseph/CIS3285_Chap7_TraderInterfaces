@@ -15,16 +15,17 @@ class Program
             return;
         }
 
-        var tradeURL = "http://raw.githubusercontent.com/tgibbons-css/CIS3285_Unit9_F24/refs/heads/master/SingleResponsibilityPrinciple/trades.txt";
+        var tradeURL = "https://unit9trader.azurewebsites.net/api/TradeData";
+        var tradeRESTURL = "https://unit9trader.azurewebsites.net/api/TradeData";
 
         ILogger logger = new ConsoleLogger();
         ITradeValidator tradeValidator = new SimpleTradeValidator(logger);
-        ITradeDataProvider URLDataProvider = new URLTradeDataProvider(tradeURL, logger);
+        ITradeDataProvider RestfulDataProvider = new RestfulTradeDataProvider(tradeRESTURL, logger);
         ITradeMapper tradeMapper = new SimpleTradeMapper();
         ITradeParser tradeParser = new SimpleTradeParser(tradeValidator, tradeMapper);
         ITradeStorage tradeStorage = new AdoNetTradeStorage(logger);
 
-        var tradeProcessor = new TradeProcessor(URLDataProvider, tradeParser, tradeStorage);
+        var tradeProcessor = new TradeProcessor(RestfulDataProvider, tradeParser, tradeStorage);
         tradeProcessor.ProcessTrades();
 
         //Console.ReadKey();
